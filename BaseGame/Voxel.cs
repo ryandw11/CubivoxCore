@@ -9,8 +9,8 @@ namespace CubivoxCore.BaseGame
     public interface Voxel
     {
         Location GetLocation();
-        ModVoxel GetModVoxel();
-        void SetModVoxel(ModVoxel modVoxel);
+        VoxelDef GetVoxelDef();
+        void SetVoxelDef(VoxelDef voxelDef);
         Chunk GetChunk();
     }
 }
