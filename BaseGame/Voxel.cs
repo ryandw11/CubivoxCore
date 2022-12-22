@@ -6,20 +6,11 @@ using System.Text;
 
 namespace CubivoxCore.BaseGame
 {
-    public class Voxel
+    public interface Voxel
     {
-        private Location location;
-        private ModVoxel modVoxel;
-
-        public Voxel(Location location, ModVoxel modVoxel)
-        {
-            if (location == null)
-                throw new ArgumentNullException("location", "The location of a Voxel cannot be null!");
-            if (modVoxel == null)
-                throw new ArgumentNullException("modVoxel", "The modVoxel cannot be null!");
-
-            this.location = location;
-            this.modVoxel = modVoxel;
-        }
+        Location GetLocation();
+        ModVoxel GetModVoxel();
+        void SetModVoxel(ModVoxel modVoxel);
+        Chunk GetChunk();
     }
 }
