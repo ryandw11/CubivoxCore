@@ -1,6 +1,8 @@
 ﻿using CubivoxCore.BaseGame;
 using CubivoxCore.Mods;
 
+using System;
+
 namespace CubivoxCore
 {
     /// <summary>
