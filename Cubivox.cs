@@ -1,19 +1,19 @@
-﻿using CubivoxCore.Mods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CubivoxCore.BaseGame;
+using CubivoxCore.Mods;
 
 namespace CubivoxCore
 {
-    internal class Cubivox : Mod
+    /// <summary>
+    /// The Mod that represents the Cubivox game itself.
+    /// <br/>
+    /// This is special and implemented by both the Client and Server.
+    /// <br/>
+    /// This class contains all the important components of Cubivox, such as the <see cref="ItemRegistry"/>.
+    /// </summary>
+    public abstract class Cubivox : Mod
     {
-        private static Cubivox instance;
-
-        public Cubivox()
-        {
-            instance = this;
-        }
+        protected static Cubivox instance;
+        protected ItemRegistry itemRegistry;
 
         public string[] GetAuthors()
         {
@@ -35,10 +35,8 @@ namespace CubivoxCore
             return "1.0";
         }
 
-        public void OnEnable()
-        {
-            
-        }
+        public abstract void OnEnable();
+        public abstract EnvType GetEnvType();
 
         public static Cubivox GetInstance()
         {
@@ -47,6 +45,16 @@ namespace CubivoxCore
                 throw new Exception("The cubivox base game has not been initalized yet!");
             }
             return instance;
+        }
+
+        public static ItemRegistry GetItemRegistry()
+        {
+            return GetInstance().itemRegistry;
+        }
+
+        public static EnvType GetEnvironment()
+        {
+            return GetInstance().GetEnvType();
         }
     }
 }
