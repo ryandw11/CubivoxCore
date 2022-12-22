@@ -1,4 +1,6 @@
-﻿namespace CubivoxCore.BaseGame
+﻿using System.Collections.Generic;
+
+namespace CubivoxCore.BaseGame
 {
     public interface ItemRegistry
     {
