@@ -5,16 +5,16 @@ using System.Text;
 
 namespace CubivoxCore.BaseGame.Texturing
 {
-    public class AtlasTexture
+    public abstract class AtlasTexture
     {
-        public string location { private set; get; }
-        public int id { private set; get; }
-        public float xOffset { private set; get; }
-        public float yOffset { private set; get; }
+        public string location { protected set; get; }
+        public int id { protected set; get; }
+        public float xOffset { protected set; get; }
+        public float yOffset { protected set; get; }
         
-        public AtlasTexture(string location)
+        protected AtlasTexture(string location)
         {
-            this.location = location.Replace(".png", "");
+            this.location = location;
         }
     }
 }

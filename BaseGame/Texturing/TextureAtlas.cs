@@ -14,5 +14,6 @@ namespace CubivoxCore.BaseGame.Texturing
         int GetTextureHeight();
         void SetTextureSize(int width, int height);
         void RegisterTexture(AtlasTexture texture, bool recalculateAtlas);
+        AtlasTexture CreateAtlasTexture(string location);
     }
 }

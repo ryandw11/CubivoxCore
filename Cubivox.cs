@@ -1,4 +1,5 @@
 ﻿using CubivoxCore.BaseGame;
+using CubivoxCore.BaseGame.Texturing;
 using CubivoxCore.Mods;
 
 using System;
@@ -16,6 +17,7 @@ namespace CubivoxCore
     {
         protected static Cubivox instance;
         protected ItemRegistry itemRegistry;
+        protected TextureAtlas textureAtlas;
 
         public string[] GetAuthors()
         {
@@ -52,6 +54,11 @@ namespace CubivoxCore
         public static ItemRegistry GetItemRegistry()
         {
             return GetInstance().itemRegistry;
+        }
+
+        public static TextureAtlas GetTextureAtlas()
+        {
+            return GetInstance().textureAtlas;
         }
 
         public static EnvType GetEnvironment()

@@ -1,4 +1,5 @@
-﻿using CubivoxCore.Mods;
+﻿using CubivoxCore.BaseGame.Texturing;
+using CubivoxCore.Mods;
 using CubivoxCore.Utils;
 
 namespace CubivoxCore.BaseGame.VoxelDefs
@@ -6,6 +7,11 @@ namespace CubivoxCore.BaseGame.VoxelDefs
     public class AirVoxel : VoxelDef
     {
         public static readonly string KEY = "AIR";
+
+        public AtlasTexture GetAtlasTexture()
+        {
+            return null;
+        }
 
         public ControllerKey GetControllerKey()
         {
@@ -30,6 +36,11 @@ namespace CubivoxCore.BaseGame.VoxelDefs
         public string GetTexture()
         {
             return null;
+        }
+
+        public bool IsTransparent()
+        {
+            return true;
         }
     }
 }
