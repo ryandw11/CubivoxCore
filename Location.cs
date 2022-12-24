@@ -99,5 +99,22 @@ namespace CubivoxCore {
         }
 
         public override string ToString() => $"{{Location: ({x}, {y}, {z}); ({pitch}, {yaw}) }}";
+
+        public override int GetHashCode()
+        {
+            return new { world, x, y, z, pitch, yaw }.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is Location)
+            {
+                Location location = (Location)obj;
+                return world == location.world && x == location.x && y == location.y && z == location.z && pitch == location.pitch && yaw == location.yaw;
+            }
+
+            return false;
+        }
     }
 }
