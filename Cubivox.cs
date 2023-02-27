@@ -1,5 +1,6 @@
 ﻿using CubivoxCore.BaseGame;
 using CubivoxCore.BaseGame.Texturing;
+using CubivoxCore.Exceptions;
 using CubivoxCore.Mods;
 
 using System;
@@ -17,7 +18,7 @@ namespace CubivoxCore
     {
         protected static Cubivox instance;
         protected ItemRegistry itemRegistry;
-        protected TextureAtlas textureAtlas;
+        protected TextureAtlas? textureAtlas;
 
         public string[] GetAuthors()
         {
@@ -58,12 +59,20 @@ namespace CubivoxCore
 
         public static TextureAtlas GetTextureAtlas()
         {
+            if (GetInstance().textureAtlas == null)
+                throw new InvalidEnvironmentException();
+
             return GetInstance().textureAtlas;
         }
 
         public static EnvType GetEnvironment()
         {
             return GetInstance().GetEnvType();
+        }
+
+        public static VoxelDef GetVoxelDefinition(ControllerKey controllerKey)
+        {
+            return instance.itemRegistry.GetVoxelDefinition(controllerKey);
         }
     }
 }

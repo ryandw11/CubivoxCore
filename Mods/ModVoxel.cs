@@ -11,8 +11,9 @@ namespace CubivoxCore.Mods
 
         public ModVoxel(Mod mod) : base(mod)
         { 
-            if(GetModel() == null)
+            if(GetModel() == null && Cubivox.GetEnvironment() != EnvType.SERVER)
             {
+                // Atlas textures do not exist on the server.
                 atlasTexture = Cubivox.GetTextureAtlas().CreateAtlasTexture(GetTexture());
             }
 

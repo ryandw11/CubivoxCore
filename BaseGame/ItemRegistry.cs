@@ -8,5 +8,6 @@ namespace CubivoxCore.BaseGame
         void UnregisterItem(Item item);
         List<Item> GetItems();
         Item GetItem(ControllerKey key);
+        VoxelDef GetVoxelDefinition(ControllerKey key);
     }
 }
