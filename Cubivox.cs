@@ -2,7 +2,7 @@
 using CubivoxCore.BaseGame.Texturing;
 using CubivoxCore.Exceptions;
 using CubivoxCore.Mods;
-
+using CubivoxCore.Worlds.Generation;
 using System;
 
 namespace CubivoxCore
@@ -17,6 +17,8 @@ namespace CubivoxCore
     public abstract class Cubivox : Mod
     {
         protected static Cubivox instance;
+
+        protected GeneratorRegistry generatorRegistry;
         protected ItemRegistry itemRegistry;
         protected TextureAtlas? textureAtlas;
 
@@ -43,6 +45,15 @@ namespace CubivoxCore
         public abstract void OnEnable();
         public abstract EnvType GetEnvType();
 
+        /// <summary>
+        /// Assert that the code is executing on the server.
+        /// </summary>
+        public abstract void AssertServer();
+        /// <summary>
+        /// Assert that the code is executing on the client.
+        /// </summary>
+        public abstract void AssertClient();
+
         public static Cubivox GetInstance()
         {
             if (instance == null)
@@ -50,6 +61,14 @@ namespace CubivoxCore
                 throw new Exception("The cubivox base game has not been initalized yet!");
             }
             return instance;
+        }
+
+        public static GeneratorRegistry GetGeneratorRegistry()
+        {
+            if (GetInstance().generatorRegistry == null)
+                throw new InvalidEnvironmentException();
+
+            return GetInstance().generatorRegistry;
         }
 
         public static ItemRegistry GetItemRegistry()
