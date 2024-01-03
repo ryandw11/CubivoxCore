@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubivoxCore", "CubivoxCore.csproj", "{AEDAC87D-0B24-4925-A5C8-B00FC4320268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEDAC87D-0B24-4925-A5C8-B00FC4320268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEDAC87D-0B24-4925-A5C8-B00FC4320268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEDAC87D-0B24-4925-A5C8-B00FC4320268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEDAC87D-0B24-4925-A5C8-B00FC4320268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47F8585C-530E-4EAE-AB6A-5A907B961F9F}
+	EndGlobalSection
+EndGlobal
