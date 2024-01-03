@@ -10,8 +10,8 @@ namespace CubivoxCore
 
         public ControllerKey(string controller, string key)
         {
-            this.controller = controller;
-            this.key = key;
+            this.controller = controller.ToUpper();
+            this.key = key.ToUpper();
         }
 
         public ControllerKey(Mod mod, string key) : this(mod.GetUppercaseName(), key)

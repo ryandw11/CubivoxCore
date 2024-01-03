@@ -20,7 +20,7 @@ namespace CubivoxCore
 
         protected GeneratorRegistry generatorRegistry;
         protected ItemRegistry itemRegistry;
-        protected TextureAtlas? textureAtlas;
+        protected TextureAtlas textureAtlas;
 
         public string[] GetAuthors()
         {
