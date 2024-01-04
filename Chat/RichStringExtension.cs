@@ -10,7 +10,7 @@ namespace CubivoxCore.Chat
     {
         public static string Color(this string text, string color)
         {
-            return $"<color = \"{color}\">{text}</color>";
+            return $"<color=\"{color}\">{text}</color>";
         }
 
         public static string Italic(this string text)
