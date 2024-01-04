@@ -61,6 +61,7 @@
     <Compile Include="BaseGame\Voxel.cs" />
     <Compile Include="BaseGame\VoxelDef.cs" />
     <Compile Include="BaseGame\VoxelDefs\AirVoxel.cs" />
+    <Compile Include="Chat\RichStringExtension.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="ControllerKey.cs" />
     <Compile Include="Cubivox.cs" />
