@@ -1,6 +1,7 @@
 ﻿using CubivoxCore.Attributes;
 using CubivoxCore.BaseGame;
 using CubivoxCore.BaseGame.Texturing;
+using CubivoxCore.Events;
 
 namespace CubivoxCore.Mods
 {
