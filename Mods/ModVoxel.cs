@@ -10,6 +10,70 @@ namespace CubivoxCore.Mods
         protected AtlasTexture atlasTexture;
         protected bool transparent;
 
+        public VoxelDefPlaceEventDelegate _PlaceEvent { get; set; }
+        /// <summary>
+        /// This event is triggered whenever a player places a defined voxel.
+        /// 
+        /// <para>Use the <see cref="ClientOnly"/> or <see cref="ServerOnly"/> attributes to limit the event to trigger only on the client or the server.</para>
+        /// </summary>
+        public event VoxelDefPlaceEventDelegate PlaceEvent
+        {
+            add
+            {
+                if (value.Method.GetCustomAttributes(typeof(ClientOnly), true).Length > 0)
+                {
+                    if(Cubivox.GetEnvironment() == EnvType.CLIENT)
+                    {
+                        _PlaceEvent += value;
+                    }
+                }
+                else if (value.Method.GetCustomAttributes(typeof(ServerOnly), true).Length > 0)
+                {
+                    if(Cubivox.GetEnvironment() == EnvType.SERVER)
+                    {
+                        _PlaceEvent += value;
+                    }
+                }
+                else
+                {
+                    _PlaceEvent += value;
+                }
+            }
+            remove { _PlaceEvent -= value; }
+        }
+
+        public VoxelDefBreakEventDelegate _BreakEvent { get; set; }
+        /// <summary>
+        /// This event is triggered whenever a player breaks a defined voxel.
+        /// 
+        /// <para>Use the <see cref="ClientOnly"/> or <see cref="ServerOnly"/> attributes to limit the event to trigger only on the client or the server.</para>
+        /// </summary>
+        public event VoxelDefBreakEventDelegate BreakEvent
+        {
+            add
+            {
+                if (value.Method.GetCustomAttributes(typeof(ClientOnly), true).Length > 0)
+                {
+                    if (Cubivox.GetEnvironment() == EnvType.CLIENT)
+                    {
+                        _BreakEvent += value;
+                    }
+                }
+                else if (value.Method.GetCustomAttributes(typeof(ServerOnly), true).Length > 0)
+                {
+                    if (Cubivox.GetEnvironment() == EnvType.SERVER)
+                    {
+                        _BreakEvent += value;
+                    }
+                }
+                else
+                {
+                    _BreakEvent += value;
+                }
+            }
+            remove { _BreakEvent -= value; }
+        }
+
         public ModVoxel(Mod mod) : base(mod)
         { 
             if(GetModel() == null && Cubivox.GetEnvironment() != EnvType.SERVER)
@@ -29,6 +93,16 @@ namespace CubivoxCore.Mods
         public bool IsTransparent()
         {
             return transparent;
+        }
+
+        AtlasTexture VoxelDef.GetAtlasTexture()
+        {
+            throw new NotImplementedException();
+        }
+
+        bool VoxelDef.IsTransparent()
+        {
+            throw new NotImplementedException();
         }
     }
 }
