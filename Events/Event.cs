@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace CubivoxCore.Events
 {
-    public delegate void GenericEventDelegate(Event evt);
     public class Event
     {
+    }
+
+    public class CancellableEvent : Event
+    {
+        private bool canceled;
+
+        public bool IsCanceled()
+        {
+            return canceled;
+        }
+
+        public void Cancel()
+        {
+            canceled = true;
+        }
     }
 }

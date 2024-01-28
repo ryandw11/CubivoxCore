@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace CubivoxCore.Events
 {
-    public delegate void VoxelBreakEventDelegate(VoxelBreakEvent evt);
-    public class VoxelBreakEvent: Event
+    public class VoxelBreakEvent : CancellableEvent
     {
         public Player Player { get; private set; }
         public Voxel Voxel { get; private set; }
@@ -19,11 +18,6 @@ namespace CubivoxCore.Events
         {
             Player = player;
             Voxel = voxel;
-        }
-
-        public void Cancel()
-        {
-            IsCancelled = true;
         }
     }
 }

@@ -8,22 +8,15 @@ using System.Threading.Tasks;
 
 namespace CubivoxCore.Events
 {
-    public delegate void VoxelPlacekEventDelegate(VoxelPlaceEvent evt);
-    public class VoxelPlaceEvent : Event
+    public class VoxelPlaceEvent : CancellableEvent
     {
         public Player Player { get; private set; }
         public Voxel Voxel { get; private set; }
-        public bool IsCancelled { get; private set; }
 
         public VoxelPlaceEvent(Player player, Voxel voxel)
         {
             Player = player;
             Voxel = voxel;
-        }
-
-        public void Cancel()
-        {
-            IsCancelled = true;
         }
     }
 }
