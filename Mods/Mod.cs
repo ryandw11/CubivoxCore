@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CubivoxCore.BaseGame;
+using CubivoxCore.Worlds.Generation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,9 @@ using System.Text;
 namespace CubivoxCore.Mods
 {
     /// <summary>
-    /// The main interface for all mods to extend from.
+    /// Represents a mod for Cubivox.
+    /// 
+    /// <para>It is recommended that mods use <see cref="CubivoxMod"/> for their implementation.</para>
     /// </summary>
     public interface Mod
     {
@@ -14,6 +18,9 @@ namespace CubivoxCore.Mods
         string GetVersion();
         string[] GetAuthors();
         string GetUppercaseName();
+        string GetDescription();
         void OnEnable();
+        void LoadItemsStage(ItemRegistry registry);
+        void LoadGeneratorsStage(GeneratorRegistry registry);
     }
 }
