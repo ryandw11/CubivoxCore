@@ -1,4 +1,5 @@
 ﻿using CubivoxCore.BaseGame.Texturing;
+using CubivoxCore.Events;
 using CubivoxCore.Mods;
 using CubivoxCore.Utils;
 
@@ -7,6 +8,15 @@ namespace CubivoxCore.BaseGame.VoxelDefs
     public class AirVoxel : VoxelDef
     {
         public static readonly string KEY = "AIR";
+
+        /// <summary>
+        /// Not implemented.
+        /// </summary>
+        public VoxelDefPlaceEventDelegate _PlaceEvent { get; set; }
+        /// <summary>
+        /// Not implemented.
+        /// </summary>
+        public VoxelDefBreakEventDelegate _BreakEvent { get; set; }
 
         public AtlasTexture GetAtlasTexture()
         {

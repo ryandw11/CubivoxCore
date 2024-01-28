@@ -20,7 +20,7 @@ namespace CubivoxCore
 
         protected GeneratorRegistry generatorRegistry;
         protected ItemRegistry itemRegistry;
-        protected TextureAtlas? textureAtlas;
+        protected TextureAtlas textureAtlas;
 
         public string[] GetAuthors()
         {
@@ -42,7 +42,14 @@ namespace CubivoxCore
             return "1.0";
         }
 
+        public string GetDescription()
+        {
+            return "Cubivox";
+        }
+
         public abstract void OnEnable();
+        public abstract void LoadItemsStage(ItemRegistry registry);
+        public abstract void LoadGeneratorsStage(GeneratorRegistry registry);
         public abstract EnvType GetEnvType();
 
         /// <summary>

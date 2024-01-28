@@ -8,16 +8,16 @@ namespace CubivoxCore.Worlds.Generation
 {
     public abstract class WorldGenerator
     {
-        protected readonly string key;
-        protected readonly string name;
+        public readonly string Key;
+        public readonly string Name;
 
         public WorldGenerator()
         {
             Name name = (Name)GetType().GetCustomAttributes(typeof(Name), true)[0];
-            this.name = name.GetValue();
+            this.Name = name.GetValue();
 
             Key key = (Key)GetType().GetCustomAttributes(typeof(Key), true)[0];
-            this.key = key.GetValue();
+            this.Key = key.GetValue();
         }
 
         public abstract void GenerateChunk(int chunkX, int chunkY, int chunkZ, ChunkData chunkData);
