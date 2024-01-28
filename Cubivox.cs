@@ -1,5 +1,7 @@
 ﻿using CubivoxCore.BaseGame;
 using CubivoxCore.BaseGame.Texturing;
+using CubivoxCore.Console;
+using CubivoxCore.Events;
 using CubivoxCore.Exceptions;
 using CubivoxCore.Mods;
 using CubivoxCore.Worlds.Generation;
@@ -21,6 +23,7 @@ namespace CubivoxCore
         protected GeneratorRegistry generatorRegistry;
         protected ItemRegistry itemRegistry;
         protected TextureAtlas textureAtlas;
+        protected EventManager eventManager;
 
         public string[] GetAuthors()
         {
@@ -50,6 +53,7 @@ namespace CubivoxCore
         public abstract void OnEnable();
         public abstract void LoadItemsStage(ItemRegistry registry);
         public abstract void LoadGeneratorsStage(GeneratorRegistry registry);
+        public abstract Logger GetLogger();
         public abstract EnvType GetEnvType();
 
         /// <summary>
@@ -99,6 +103,11 @@ namespace CubivoxCore
         public static VoxelDef GetVoxelDefinition(ControllerKey controllerKey)
         {
             return instance.itemRegistry.GetVoxelDefinition(controllerKey);
+        }
+
+        public static EventManager GetEventManager()
+        {
+            return GetInstance().eventManager;
         }
     }
 }

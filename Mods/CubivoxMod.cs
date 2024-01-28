@@ -17,6 +17,8 @@ namespace CubivoxCore.Mods
         private ModDescriptionFile modDescriptionFile;
         private Logger logger;
 
+        public CubivoxMod() { }
+
         public CubivoxMod(ModDescriptionFile modDescriptionFile, Logger logger) 
         { 
             this.modDescriptionFile = modDescriptionFile;

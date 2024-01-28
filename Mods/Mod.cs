@@ -1,4 +1,5 @@
 ﻿using CubivoxCore.BaseGame;
+using CubivoxCore.Console;
 using CubivoxCore.Worlds.Generation;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,6 @@ namespace CubivoxCore.Mods
         void OnEnable();
         void LoadItemsStage(ItemRegistry registry);
         void LoadGeneratorsStage(GeneratorRegistry registry);
+        Logger GetLogger();
     }
 }
