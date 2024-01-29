@@ -1,5 +1,6 @@
 ﻿using CubivoxCore.BaseGame;
 using CubivoxCore.Console;
+using CubivoxCore.Events;
 using CubivoxCore.Worlds.Generation;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,14 @@ namespace CubivoxCore.Mods
     public abstract class CubivoxMod : Mod
     {
         private ModDescriptionFile modDescriptionFile;
-        private Logger logger;
+        protected Logger Logger { get; private set; }
 
         public CubivoxMod() { }
 
         public CubivoxMod(ModDescriptionFile modDescriptionFile, Logger logger) 
         { 
             this.modDescriptionFile = modDescriptionFile;
-            this.logger = logger;
+            Logger = logger;
         }
 
         public string[] GetAuthors()
@@ -50,11 +51,11 @@ namespace CubivoxCore.Mods
             return modDescriptionFile.Version;
         }
 
-        public void LoadGeneratorsStage(GeneratorRegistry registry)
+        public virtual void LoadGeneratorsStage(GeneratorRegistry registry)
         {
         }
 
-        public void LoadItemsStage(ItemRegistry registry)
+        public virtual void LoadItemsStage(ItemRegistry registry)
         {
         }
 
@@ -62,7 +63,12 @@ namespace CubivoxCore.Mods
 
         public Logger GetLogger()
         {
-            return logger;
+            return Logger;
+        }
+
+        protected void RegisterEvent<T>(Action<T> evt) where T : Event
+        {
+            Cubivox.GetEventManager().RegisterEvent(evt);
         }
     }
 }
