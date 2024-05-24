@@ -1,4 +1,6 @@
-﻿using CubivoxCore.Attributes;
+﻿using System;
+
+using CubivoxCore.Attributes;
 using CubivoxCore.BaseGame;
 using CubivoxCore.BaseGame.Texturing;
 using CubivoxCore.Events;
@@ -93,16 +95,6 @@ namespace CubivoxCore.Mods
         public bool IsTransparent()
         {
             return transparent;
-        }
-
-        AtlasTexture VoxelDef.GetAtlasTexture()
-        {
-            throw new NotImplementedException();
-        }
-
-        bool VoxelDef.IsTransparent()
-        {
-            throw new NotImplementedException();
         }
     }
 }
