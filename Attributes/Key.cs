@@ -6,7 +6,7 @@ using System.Text;
 namespace CubivoxCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class Key : Attribute
+    public class Key : Attribute, PropertyAttribute<string>
     {
         private string key;
         public Key(string key)

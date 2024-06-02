@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CubivoxCore.Exceptions
 {
+    /// <summary>
+    /// This exception is thrown by some methods when it is not supported to call this on a specific environment.
+    /// </summary>
     public class InvalidEnvironmentException : Exception
     {
         public InvalidEnvironmentException()

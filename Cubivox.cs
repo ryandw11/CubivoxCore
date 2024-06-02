@@ -1,9 +1,11 @@
-﻿using CubivoxCore.BaseGame;
-using CubivoxCore.BaseGame.Texturing;
+﻿using CubivoxCore.Attributes;
 using CubivoxCore.Console;
 using CubivoxCore.Events;
 using CubivoxCore.Exceptions;
+using CubivoxCore.Items;
 using CubivoxCore.Mods;
+using CubivoxCore.Texturing;
+using CubivoxCore.Voxels;
 using CubivoxCore.Worlds.Generation;
 using System;
 
@@ -74,6 +76,14 @@ namespace CubivoxCore
             return instance;
         }
 
+        /// <summary>
+        /// Get the generator registery.
+        /// 
+        /// <para>World generation is done on the server.</para>
+        /// </summary>
+        /// <returns>The world generator.</returns>
+        /// <exception cref="InvalidEnvironmentException">Will except if called when not on the server.</exception>
+        [ServerOnly]
         public static GeneratorRegistry GetGeneratorRegistry()
         {
             if (GetInstance().generatorRegistry == null)
@@ -82,11 +92,23 @@ namespace CubivoxCore
             return GetInstance().generatorRegistry;
         }
 
+        /// <summary>
+        /// Get the item registry.
+        /// </summary>
+        /// <returns>The item registry.</returns>
         public static ItemRegistry GetItemRegistry()
         {
             return GetInstance().itemRegistry;
         }
 
+        /// <summary>
+        /// Get the global voxel texture atlas.
+        /// 
+        /// <para>Texturing is only available on the client.</para>
+        /// </summary>
+        /// <returns>The global voxel texture atlas.</returns>
+        /// <exception cref="InvalidEnvironmentException">Will except if called when not on the client.</exception>
+        [ClientOnly]
         public static TextureAtlas GetTextureAtlas()
         {
             if (GetInstance().textureAtlas == null)
@@ -95,16 +117,29 @@ namespace CubivoxCore
             return GetInstance().textureAtlas;
         }
 
+        /// <summary>
+        /// Get the current environment. (Client or Server)
+        /// </summary>
+        /// <returns>The current environment</returns>
         public static EnvType GetEnvironment()
         {
             return GetInstance().GetEnvType();
         }
 
+        /// <summary>
+        /// Get a voxel definiton for a controller key.
+        /// </summary>
+        /// <param name="controllerKey">The controller key.</param>
+        /// <returns>The voxel definition.</returns>
         public static VoxelDef GetVoxelDefinition(ControllerKey controllerKey)
         {
             return instance.itemRegistry.GetVoxelDefinition(controllerKey);
         }
 
+        /// <summary>
+        /// Get the event manager.
+        /// </summary>
+        /// <returns>The event manager.</returns>
         public static EventManager GetEventManager()
         {
             return GetInstance().eventManager;

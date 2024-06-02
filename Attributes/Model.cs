@@ -3,7 +3,7 @@
 namespace CubivoxCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class Model : Attribute
+    public class Model : Attribute, PropertyAttribute<string>
     {
         private string model;
         public Model(string model)

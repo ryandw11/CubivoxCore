@@ -2,7 +2,11 @@
 
 using CubivoxCore.Worlds;
 
-namespace CubivoxCore {
+namespace CubivoxCore
+{
+    /// <summary>
+    /// Represents a position within 3D space.
+    /// </summary>
     public class Location
     {
         public World world { private set; get; }

@@ -1,16 +1,43 @@
 ﻿using System;
 
 using CubivoxCore.Attributes;
-using CubivoxCore.BaseGame;
-using CubivoxCore.BaseGame.Texturing;
 using CubivoxCore.Events;
+using CubivoxCore.Items;
+using CubivoxCore.Mods;
+using CubivoxCore.Texturing;
 
-namespace CubivoxCore.Mods
+namespace CubivoxCore.Voxels
 {
+    /// <summary>
+    /// Define a new Voxel type that can be placed in the world.
+    /// 
+    /// <para>Mods should extend this class to create new voxels.</para>
+    /// </summary>
     public class ModVoxel : ModItem, VoxelDef
     {
         protected AtlasTexture atlasTexture;
         protected bool transparent;
+
+        public ModVoxel(Mod mod) : base(mod)
+        {
+            if (GetModel() == null && Cubivox.GetEnvironment() != EnvType.SERVER)
+            {
+                // Atlas textures do not exist on the server.
+                atlasTexture = Cubivox.GetTextureAtlas().CreateAtlasTexture(GetTexture());
+            }
+
+            transparent = GetType().GetCustomAttributes(typeof(Transparent), true).Length > 0;
+        }
+
+        public AtlasTexture GetAtlasTexture()
+        {
+            return atlasTexture;
+        }
+
+        public bool IsTransparent()
+        {
+            return transparent;
+        }
 
         public VoxelDefPlaceEventDelegate _PlaceEvent { get; set; }
         /// <summary>
@@ -24,14 +51,14 @@ namespace CubivoxCore.Mods
             {
                 if (value.Method.GetCustomAttributes(typeof(ClientOnly), true).Length > 0)
                 {
-                    if(Cubivox.GetEnvironment() == EnvType.CLIENT)
+                    if (Cubivox.GetEnvironment() == EnvType.CLIENT)
                     {
                         _PlaceEvent += value;
                     }
                 }
                 else if (value.Method.GetCustomAttributes(typeof(ServerOnly), true).Length > 0)
                 {
-                    if(Cubivox.GetEnvironment() == EnvType.SERVER)
+                    if (Cubivox.GetEnvironment() == EnvType.SERVER)
                     {
                         _PlaceEvent += value;
                     }
@@ -74,27 +101,6 @@ namespace CubivoxCore.Mods
                 }
             }
             remove { _BreakEvent -= value; }
-        }
-
-        public ModVoxel(Mod mod) : base(mod)
-        { 
-            if(GetModel() == null && Cubivox.GetEnvironment() != EnvType.SERVER)
-            {
-                // Atlas textures do not exist on the server.
-                atlasTexture = Cubivox.GetTextureAtlas().CreateAtlasTexture(GetTexture());
-            }
-
-           transparent = GetType().GetCustomAttributes(typeof(Transparent), true).Length > 0;
-        }
-
-        public AtlasTexture GetAtlasTexture()
-        {
-            return atlasTexture;
-        }
-
-        public bool IsTransparent()
-        {
-            return transparent;
         }
     }
 }

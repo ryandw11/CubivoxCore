@@ -1,4 +1,4 @@
-﻿using CubivoxCore.BaseGame;
+﻿using CubivoxCore.Voxels;
 using CubivoxCore.Worlds.Generation;
 
 namespace CubivoxCore.Worlds

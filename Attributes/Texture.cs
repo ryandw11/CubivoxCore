@@ -6,7 +6,7 @@ using System.Text;
 namespace CubivoxCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class Texture : Attribute
+    public class Texture : Attribute, PropertyAttribute<string>
     {
         private string texture;
         public Texture(string texture)
@@ -14,7 +14,7 @@ namespace CubivoxCore.Attributes
             this.texture = texture;
         }
 
-        public string GetTexture()
+        public string GetValue()
         {
             return texture;
         }

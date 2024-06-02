@@ -1,6 +1,9 @@
 namespace CubivoxCore.Utils
 {
-    public class CMath
+    /// <summary>
+    /// Cubivox math utility class.
+    /// </summary>
+    public sealed class CMath
     {
         public static int mod(int x, int m)
         {

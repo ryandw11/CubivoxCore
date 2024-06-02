@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CubivoxCore.Mods
+﻿namespace CubivoxCore.Mods
 {
     /// <summary>
     /// Represents the file that describes a mod. 
