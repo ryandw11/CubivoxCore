@@ -1,5 +1,6 @@
 ﻿using CubivoxCore.Attributes;
 using CubivoxCore.Exceptions;
+using System;
 using System.Reflection;
 
 namespace CubivoxCore.Utils

@@ -1,4 +1,5 @@
-﻿using CubivoxCore.Voxels;
+﻿using System.Collections.Generic;
+using CubivoxCore.Voxels;
 
 namespace CubivoxCore.Items
 {

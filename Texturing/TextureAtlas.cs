@@ -1,4 +1,5 @@
-﻿using CubivoxCore.Attributes;
+﻿using System.Collections.Generic;
+using CubivoxCore.Attributes;
 
 namespace CubivoxCore.Texturing
 {

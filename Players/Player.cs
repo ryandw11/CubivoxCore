@@ -1,4 +1,6 @@
-﻿using CubivoxCore.Commands;
+﻿using System;
+
+using CubivoxCore.Commands;
 using CubivoxCore.Permissions;
 using CubivoxCore.Worlds;
 

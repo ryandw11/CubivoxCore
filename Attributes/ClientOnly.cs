@@ -1,4 +1,6 @@
-﻿namespace CubivoxCore.Attributes
+﻿using System;
+
+namespace CubivoxCore.Attributes
 {
     /// <summary>
     /// Mark a method to only be executed on the client. 
