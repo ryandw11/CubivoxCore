@@ -120,5 +120,10 @@ namespace CubivoxCore
 
             return false;
         }
+
+        public Location Clone()
+        {
+            return new Location(world, x, y, z, pitch, yaw);
+        }
     }
 }
