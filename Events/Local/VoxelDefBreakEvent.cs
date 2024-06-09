@@ -1,7 +1,7 @@
 ﻿using CubivoxCore.Players;
 using CubivoxCore.Voxels;
 
-namespace CubivoxCore.Events
+namespace CubivoxCore.Events.Local
 {
     public delegate void VoxelDefBreakEventDelegate(VoxelDefBreakEvent evt);
 

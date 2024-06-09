@@ -1,4 +1,5 @@
-﻿using CubivoxCore.Voxels;
+﻿using CubivoxCore.Attributes;
+using CubivoxCore.Voxels;
 
 namespace CubivoxCore.Worlds
 {
@@ -44,5 +45,13 @@ namespace CubivoxCore.Worlds
         /// </summary>
         /// <returns>The location of the chunk.</returns>
         Location GetLocation();
+
+        /// <summary>
+        /// Completely regenerates a chunk based upon the world's generator.
+        /// 
+        /// <para>This method does nothing on the client.</para>
+        /// </summary>
+        [ServerOnly]
+        void Regenerate();
     }
 }

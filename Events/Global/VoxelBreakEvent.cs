@@ -1,26 +1,27 @@
 ﻿using CubivoxCore.Players;
 using CubivoxCore.Voxels;
 
-namespace CubivoxCore.Events
+namespace CubivoxCore.Events.Global
 {
+
     /// <summary>
-    /// The global event for when any voxel is placed by a Player.
+    /// The global event for when any voxel is destroyed by a Player.
     /// 
-    /// <para>This event is only triggered when a Player places a voxel.</para>
+    /// <para>This event is only triggered when a Player breaks a voxel.</para>
     /// </summary>
-    public class VoxelPlaceEvent : CancellableEvent
+    public class VoxelBreakEvent : CancellableEvent
     {
         /// <summary>
-        /// The player that placed the voxel.
+        /// The player that broke the voxel.
         /// </summary>
         public Player Player { get; private set; }
 
         /// <summary>
-        /// The voxel that was placed.
+        /// The voxel that was broken.
         /// </summary>
         public Voxel Voxel { get; private set; }
 
-        public VoxelPlaceEvent(Player player, Voxel voxel)
+        public VoxelBreakEvent(Player player, Voxel voxel)
         {
             Player = player;
             Voxel = voxel;

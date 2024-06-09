@@ -1,4 +1,4 @@
-﻿using CubivoxCore.Events;
+﻿using CubivoxCore.Events.Local;
 using CubivoxCore.Mods;
 using CubivoxCore.Texturing;
 using CubivoxCore.Utils;

@@ -1,7 +1,7 @@
 ﻿using System;
 
 using CubivoxCore.Attributes;
-using CubivoxCore.Events;
+using CubivoxCore.Events.Local;
 using CubivoxCore.Items;
 using CubivoxCore.Mods;
 using CubivoxCore.Texturing;
