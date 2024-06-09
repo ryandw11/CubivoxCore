@@ -22,7 +22,7 @@ namespace CubivoxCore.Events.Global
         public PlayerJoinEvent(Player player)
         {
             Player = player;
-            Message = "{0} has joined the game!".Color("Yellow");
+            Message = "{0} has joined the game!".Color("yellow");
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CubivoxCore.Events.Global
         public PlayerLeaveEvent(Player player)
         {
             Player = player;
-            Message = "{0} has left the game!".Color("Yellow");
+            Message = "{0} has left the game!".Color("yellow");
         }
     }
 }
