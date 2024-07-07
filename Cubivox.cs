@@ -4,10 +4,13 @@ using CubivoxCore.Events;
 using CubivoxCore.Exceptions;
 using CubivoxCore.Items;
 using CubivoxCore.Mods;
+using CubivoxCore.Players;
 using CubivoxCore.Texturing;
 using CubivoxCore.Voxels;
+using CubivoxCore.Worlds;
 using CubivoxCore.Worlds.Generation;
 using System;
+using System.Collections.ObjectModel;
 
 namespace CubivoxCore
 {
@@ -57,6 +60,8 @@ namespace CubivoxCore
         public abstract void LoadGeneratorsStage(GeneratorRegistry registry);
         public abstract Logger GetLogger();
         public abstract EnvType GetEnvType();
+        public abstract ReadOnlyCollection<Player> GetOnlinePlayersImpl();
+        public abstract ReadOnlyCollection<World> GetWorldsImpl();
 
         /// <summary>
         /// Assert that the code is executing on the server.
@@ -66,6 +71,38 @@ namespace CubivoxCore
         /// Assert that the code is executing on the client.
         /// </summary>
         public abstract void AssertClient();
+
+        /// <summary>
+        /// Get all of the online players on the server.
+        /// </summary>
+        /// <returns>All players currently online.</returns>
+        public static ReadOnlyCollection<Player> GetOnlinePlayers()
+        {
+            return GetInstance().GetOnlinePlayersImpl();
+        }
+
+        /// <summary>
+        /// Get all of the loaded worlds.
+        /// <para>This will only contain the current world on Clients.</para>
+        /// </summary>
+        /// <returns>All of the loaded worlds.</returns>
+        public static ReadOnlyCollection<World> GetWorlds()
+        {
+            return GetInstance().GetWorldsImpl();
+        }
+
+        /// <summary>
+        /// Broadcast a message to every player on the server and the console.
+        /// </summary>
+        /// <param name="message">The message to broadcast.</param>
+        public static void BroadcastMessage(string message)
+        {
+            foreach (Player player in GetOnlinePlayers())
+            {
+                player.SendMessage(message);
+            }
+            GetInstance().GetLogger().Info(message);
+        }
 
         public static Cubivox GetInstance()
         {

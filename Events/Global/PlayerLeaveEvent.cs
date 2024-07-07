@@ -18,7 +18,7 @@ namespace CubivoxCore.Events.Global
         /// 
         /// <para>The {0} placeholder is the player's name.</para>
         /// </summary>
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         public PlayerLeaveEvent(Player player)
         {

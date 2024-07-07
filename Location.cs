@@ -102,6 +102,16 @@ namespace CubivoxCore
             return new Location(loc.world, loc.x / a, loc.y / a, loc.z / a, loc.pitch, loc.yaw);
         }
 
+        public static bool operator ==(Location loc1, Location loc2)
+        {
+            return loc1.world == loc2.world && ApproxEqual(loc1.x, loc2.x) && ApproxEqual(loc1.y, loc2.y) && ApproxEqual(loc1.z, loc2.z);
+        }
+
+        public static bool operator !=(Location loc1, Location loc2)
+        {
+            return !(loc1 == loc2);
+        }
+
         public override string ToString() => $"{{Location: ({x}, {y}, {z}); ({pitch}, {yaw}) }}";
 
         public override int GetHashCode()
@@ -124,6 +134,11 @@ namespace CubivoxCore
         public Location Clone()
         {
             return new Location(world, x, y, z, pitch, yaw);
+        }
+
+        private static bool ApproxEqual(double x1, double x2)
+        {
+            return Math.Abs(x1 - x2) < 0.03;
         }
     }
 }
