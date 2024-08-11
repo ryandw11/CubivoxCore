@@ -6,7 +6,7 @@ namespace CubivoxCore.Mods
     /// Represents the file that describes a mod. 
     /// </summary>
     [Serializable]
-    public class ModDescriptionFile
+    public struct ModDescriptionFile
     {
 
         public string ModName;
