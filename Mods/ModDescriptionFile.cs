@@ -1,15 +1,18 @@
-﻿namespace CubivoxCore.Mods
+﻿using System;
+
+namespace CubivoxCore.Mods
 {
     /// <summary>
     /// Represents the file that describes a mod. 
     /// </summary>
-    public struct ModDescriptionFile
+    [Serializable]
+    public class ModDescriptionFile
     {
 
-        public string ModName { get; set; }
-        public string MainClass { get; set; }
-        public string Description { get; set; }
-        public string Version { get; set; }
-        public string[] Authors { get; set; }
+        public string ModName;
+        public string MainClass;
+        public string Description;
+        public string Version;
+        public string[] Authors;
     }
 }
