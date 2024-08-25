@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using CubivoxCore.Attributes;
+using CubivoxCore.Mods;
 
 namespace CubivoxCore.Texturing
 {
+    public delegate void AtlasRecalculatedEventHandler();
+
     /// <summary>
     /// Represents an atlas of textures. This is primarily used for the global voxel texture atlas.
     /// 
@@ -11,6 +14,11 @@ namespace CubivoxCore.Texturing
     [ClientOnly]
     public interface TextureAtlas
     {
+        /// <summary>
+        /// Event that is triggered when the texture atlas is recalculated.
+        /// </summary>
+        event AtlasRecalculatedEventHandler AtlasRecalculatedEvent;
+
         /// <summary>
         /// The list of textures this atlas contains.
         /// </summary>
@@ -73,8 +81,10 @@ namespace CubivoxCore.Texturing
         /// <summary>
         /// Create a new atlas texture.
         /// </summary>
-        /// <param name="location">The location of the texture image.</param>
+        /// <param name="mod">The mod this atlas texture belongs to.</param>
+        /// <param name="root">The root location of the texture resource.</param>
+        /// <param name="location">The location of the texture resource.</param>
         /// <returns></returns>
-        AtlasTexture CreateAtlasTexture(string location);
+        AtlasTexture CreateAtlasTexture(Mod mod, TextureRoot root, string location);
     }
 }

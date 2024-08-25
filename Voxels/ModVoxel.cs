@@ -23,7 +23,7 @@ namespace CubivoxCore.Voxels
             if (GetModel() == null && Cubivox.GetEnvironment() != EnvType.SERVER)
             {
                 // Atlas textures do not exist on the server.
-                atlasTexture = Cubivox.GetTextureAtlas().CreateAtlasTexture(GetTexture());
+                atlasTexture = Cubivox.GetTextureAtlas().CreateAtlasTexture(mod, GetTextureRoot(), GetTexture());
             }
 
             transparent = GetType().GetCustomAttributes(typeof(Transparent), true).Length > 0;

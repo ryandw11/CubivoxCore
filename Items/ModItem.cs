@@ -1,5 +1,6 @@
 ﻿using CubivoxCore.Attributes;
 using CubivoxCore.Mods;
+using CubivoxCore.Texturing;
 using CubivoxCore.Utils;
 
 namespace CubivoxCore.Items
@@ -17,6 +18,7 @@ namespace CubivoxCore.Items
         protected readonly ControllerKey controllerKey;
         protected readonly Mod mod;
         protected readonly string name;
+        protected readonly TextureRoot textureRoot;
         protected string texture;
 
         public ModItem(Mod mod)
@@ -26,6 +28,15 @@ namespace CubivoxCore.Items
             name = PropertyUtils.RequiredProperty<Name, string>(GetType());
             controllerKey = new ControllerKey(mod, PropertyUtils.RequiredProperty<Key, string>(GetType()));
             texture = PropertyUtils.Property<Texture, string>(GetType());
+            if(GetType().GetCustomAttributes(typeof(Texture), true).Length > 0)
+            {
+                textureRoot = ((Texture)GetType().GetCustomAttributes(typeof(Texture), true)[0]).GetRoot();
+            }
+        }
+
+        public TextureRoot GetTextureRoot()
+        {
+            return textureRoot;
         }
 
         public string GetTexture()
