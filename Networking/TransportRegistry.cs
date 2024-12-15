@@ -36,16 +36,13 @@ namespace CubivoxCore.Networking
         {
             // If the key already exists, try to register that delegate to the transport.
             Type transportDelegateType;
-            if(mTypeMap.TryGetValue(key, out transportDelegateType) )
+            if( transportDelegate != null && mTypeMap.TryGetValue(key, out transportDelegateType) )
             {
                 IClientTransport clientTransport = mClientTransports[transportDelegateType];
                 try
                 {
                     ClientTransport<T> typedClientTransport = (ClientTransport<T>) clientTransport;
-                    if (transportDelegate != null)
-                    {
-                        typedClientTransport.Register(transportDelegate);
-                    }
+                    typedClientTransport.Register(transportDelegate);
                     return;
                 }
                 catch(InvalidCastException)
@@ -55,15 +52,12 @@ namespace CubivoxCore.Networking
                 }
             }
 
-            if( transportDelegate == null )
-            {
-                // Already exists.
-                return;
-            }
-
             // Else, add it.
             var transport = CreateClientTransport<T>(key);
-            transport.Register(transportDelegate);
+            if( transportDelegate != null )
+            {
+                transport.Register(transportDelegate);
+            }
             mClientTransports.Add(typeof(T), transport);
             mTypeMap.Add(key, typeof(T));
         }
@@ -81,16 +75,13 @@ namespace CubivoxCore.Networking
         {
             // If the key already exists, try to register that delegate to the transport.
             Type transportDelegateType;
-            if (mTypeMap.TryGetValue(key, out transportDelegateType))
+            if (transportDelegate != null && mTypeMap.TryGetValue(key, out transportDelegateType))
             {
                 IServerTransport serverTransport = mServerTransports[transportDelegateType];
                 try
                 {
                     ServerTransport<T> typedServerTransport = (ServerTransport<T>) serverTransport;
-                    if(transportDelegate != null)
-                    {
-                        typedServerTransport.Register(transportDelegate);
-                    }
+                    typedServerTransport.Register(transportDelegate);
                     return;
                 }
                 catch (InvalidCastException)
@@ -100,15 +91,12 @@ namespace CubivoxCore.Networking
                 }
             }
 
-            if(transportDelegate == null )
-            {
-                // Type already exists.
-                return;
-            }
-
             // Else, add it.
             var transport = CreateServerTransport<T>(key);
-            transport.Register(transportDelegate);
+            if (transportDelegate != null)
+            {
+                transport.Register(transportDelegate);
+            }
             mServerTransports.Add(typeof(T), transport);
             mTypeMap.Add(key, typeof(T));
         }
