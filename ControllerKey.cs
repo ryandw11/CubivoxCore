@@ -38,6 +38,24 @@ namespace CubivoxCore
         public ControllerKey(Mod mod, string key) : this(mod.GetUppercaseName(), key)
         {}
 
+        /// <summary>
+        /// Convert a controller key string to its object form.
+        /// </summary>
+        /// <param name="controllerKey">The controller key in string form.</param>
+        /// <exception cref="ArgumentException">If the controllerKey string is invalid.</exception>
+        public ControllerKey(string controllerKey)
+        {
+            string[] split = controllerKey.Split(':');
+
+            if(split.Length != 2)
+            {
+                throw new ArgumentException("Invalid controller key string provided.");
+            }
+
+            Controller = split[0];
+            Key = split[1];
+        }
+
         public static ControllerKey Create(string controller, string key)
         {
             return new ControllerKey(controller.ToUpper(), key.ToUpper());

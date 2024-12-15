@@ -4,6 +4,7 @@ using CubivoxCore.Events;
 using CubivoxCore.Exceptions;
 using CubivoxCore.Items;
 using CubivoxCore.Mods;
+using CubivoxCore.Networking;
 using CubivoxCore.Players;
 using CubivoxCore.Texturing;
 using CubivoxCore.Voxels;
@@ -29,6 +30,7 @@ namespace CubivoxCore
         protected ItemRegistry itemRegistry;
         protected TextureAtlas textureAtlas;
         protected EventManager eventManager;
+        protected TransportRegistry transportRegistry;
 
         public string[] GetAuthors()
         {
@@ -180,6 +182,15 @@ namespace CubivoxCore
         public static EventManager GetEventManager()
         {
             return GetInstance().eventManager;
+        }
+
+        /// <summary>
+        /// Get the transport registry.
+        /// </summary>
+        /// <returns>The transport registry.</returns>
+        public static TransportRegistry GetTransportRegistry()
+        {
+            return GetInstance().transportRegistry;
         }
     }
 }
