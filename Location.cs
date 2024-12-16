@@ -109,6 +109,14 @@ namespace CubivoxCore
 
         public static bool operator ==(Location loc1, Location loc2)
         {
+            if( loc1 is null && loc2 is null)
+            {
+                return true;
+            }
+            if( loc1 is null || loc2 is null)
+            {
+                return false;
+            }
             return loc1.world == loc2.world && ApproxEqual(loc1.x, loc2.x) && ApproxEqual(loc1.y, loc2.y) && ApproxEqual(loc1.z, loc2.z);
         }
 

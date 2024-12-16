@@ -39,7 +39,7 @@ namespace CubivoxCore.Networking.DataFormat
         /// <summary>
         /// The max size of data that can be sent through a transport.
         /// </summary>
-        public static readonly int MaxSize = 1 * 10 ^ 6; // 1MB
+        public static readonly long MaxSize = 1 * (long) Math.Pow(10, 6); // 1MB
 
         /// <summary>
         /// Writes supported objects to a byte array format used for transports.
@@ -61,7 +61,7 @@ namespace CubivoxCore.Networking.DataFormat
                             memoryStream.Write(BitConverter.GetBytes(b));
                             break;
                         case byte b:
-                            memoryStream.Write(BitConverter.GetBytes(b));
+                            memoryStream.WriteByte(b);
                             break;
                         case short s:
                             memoryStream.Write(BitConverter.GetBytes(s));
@@ -285,6 +285,8 @@ namespace CubivoxCore.Networking.DataFormat
 
         /// <summary>
         /// Assert that the objects provided in an assert match the types that are expected.
+        /// This will also modify the data so that way to type matches what is expected.
+        /// This is needed for primitives that convert to and from each other.
         /// </summary>
         /// <param name="types">The expected types (including Player for ServerTransports)</param>
         /// <param name="data">The provided data.</param>
@@ -311,9 +313,21 @@ namespace CubivoxCore.Networking.DataFormat
 
             for( int i = 0; i < data.Length; ++i )
             {
-                if( data[i].GetType() != types[i + typeOffset].GetType() )
+                Type dataType = data[i].GetType();
+                Type expectedType = types[i + typeOffset];
+
+                if ((!expectedType.IsAssignableFrom(dataType) || dataType == typeof(object)) && 
+                     !CanConvertPrimitive(dataType, expectedType))
                 {
-                    throw new ArgumentException($"Provided object at index {i} does not match the expected type.");
+                    throw new ArgumentException($"Provided object at index {i} with name {dataType.Name} does not match the expected type {expectedType.Name}.");
+                }
+                else
+                {
+                    // Perform a conversion to what is expected.
+                    if (expectedType.IsPrimitive)
+                    {
+                        data[i] = Convert.ChangeType(data[i], expectedType);
+                    }
                 }
             }
         }
@@ -332,6 +346,20 @@ namespace CubivoxCore.Networking.DataFormat
                     throw new InvalidTransportTypeException($"Type {type.Name} is not supported for transports!");
                 }
             }
+        }
+
+        private static bool CanConvertPrimitive(Type fromType, Type toType)
+        {
+            TypeCode fromCode = Type.GetTypeCode(fromType);
+            TypeCode toCode = Type.GetTypeCode(toType);
+
+            return IsNumericType(fromCode) && IsNumericType(toCode);
+        }
+
+        private static bool IsNumericType(TypeCode typeCode)
+        {
+            return typeCode == TypeCode.Byte || typeCode == TypeCode.Int16 || typeCode == TypeCode.Int32 ||
+                   typeCode == TypeCode.Int64 || typeCode == TypeCode.Single || typeCode == TypeCode.Double;
         }
     }
 }
