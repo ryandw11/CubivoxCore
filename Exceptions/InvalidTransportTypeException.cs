@@ -5,5 +5,8 @@
     /// </summary>
     public class InvalidTransportTypeException : Exception
     {
+        public InvalidTransportTypeException() { }
+
+        public InvalidTransportTypeException(string message) : base(message) { }
     }
 }

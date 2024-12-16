@@ -84,6 +84,16 @@ namespace CubivoxCore
         }
 
         /// <summary>
+        /// Get an online player using their UUID.
+        /// </summary>
+        /// <param name="uuid">The UUID of the player to find.</param>
+        /// <returns>The player or null if not found.</returns>
+        public static Player GetPlayerByUuid(Guid uuid)
+        {
+            return GetInstance().GetOnlinePlayersImpl().FirstOrDefault(player => player.GetUUID() == uuid);
+        }
+
+        /// <summary>
         /// Get all of the loaded worlds.
         /// <para>This will only contain the current world on Clients.</para>
         /// </summary>

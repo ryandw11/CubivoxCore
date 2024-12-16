@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CubivoxCore.Serialization;
 using CubivoxCore.Worlds;
 
 namespace CubivoxCore
@@ -7,7 +7,7 @@ namespace CubivoxCore
     /// <summary>
     /// Represents a position within 3D space.
     /// </summary>
-    public class Location
+    public class Location : Serializable
     {
         public World world { private set; get; }
         public double x { private set; get; }
@@ -31,6 +31,11 @@ namespace CubivoxCore
 
         public Location(double x, double y, double z) : this(null, x, y, z, 0, 0) 
         {}
+
+        public Location(byte[] data) : this(null, 0, 0, 0, 0, 0)
+        {
+            Deserialize(data);
+        }
 
         public Optional<World> GetWorld()
         {
@@ -139,6 +144,50 @@ namespace CubivoxCore
         private static bool ApproxEqual(double x1, double x2)
         {
             return Math.Abs(x1 - x2) < 0.03;
+        }
+
+        public byte[] Serialize()
+        {
+            using( MemoryStream stream = new MemoryStream() )
+            {
+                // 32 bytes
+                // TODO: Serialize the world
+                //stream.Write(world.GetUUid());
+                stream.Write(BitConverter.GetBytes(x));
+                stream.Write(BitConverter.GetBytes(y));
+                stream.Write(BitConverter.GetBytes(z));
+                stream.Write(BitConverter.GetBytes(pitch));
+                stream.Write(BitConverter.GetBytes(yaw));
+
+                return stream.ToArray();
+            }
+        }
+
+        public void Deserialize(byte[] data)
+        {
+            if( data.Length != 32 )
+            {
+                throw new ArgumentOutOfRangeException("Location data should be 32 bytes in length.");
+            }
+            using( MemoryStream stream = new MemoryStream(data) )
+            {
+                byte[] buffer = new byte[8];
+
+                stream.Read(buffer, 0, 8);
+                x = BitConverter.ToDouble(buffer);
+
+                stream.Read(buffer, 0, 8);
+                y = BitConverter.ToDouble(buffer);
+
+                stream.Read(buffer, 0, 8);
+                z = BitConverter.ToDouble(buffer);
+
+                stream.Read(buffer, 0, 4);
+                pitch = BitConverter.ToSingle(buffer);
+
+                stream.Read(buffer, 0, 4);
+                yaw = BitConverter.ToSingle(buffer);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CubivoxCore.Attributes;
 using CubivoxCore.Exceptions;
+using CubivoxCore.Networking.DataFormat;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,8 @@ namespace CubivoxCore.Networking
         public ServerTransport(ControllerKey key)
         {
             mKey = key;
+
+            TransportFormat.AssertSupportedTypes(GetParameterTypes());
         }
 
         /// <inheritdoc/>

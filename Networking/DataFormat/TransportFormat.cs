@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CubivoxCore.Exceptions;
+using CubivoxCore.Players;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace CubivoxCore.Networking.DataFormat
@@ -18,7 +21,19 @@ namespace CubivoxCore.Networking.DataFormat
         /// </summary>
         public static readonly HashSet<Type> SupportedTypes = new HashSet<Type>
         {
-            typeof(int)
+            // Primitives (non-nullable)
+            typeof(bool),
+            typeof(byte),
+            typeof(short),
+            typeof(int),
+            typeof(long),
+            typeof(float),
+            typeof(double),
+
+            // Objects (nullable)
+            typeof(string),
+            typeof(Player),
+            typeof(Location)
         };
 
         /// <summary>
@@ -41,9 +56,67 @@ namespace CubivoxCore.Networking.DataFormat
                 {
                     switch (obj)
                     {
+                        // Primitives
+                        case bool b:
+                            memoryStream.Write(BitConverter.GetBytes(b));
+                            break;
+                        case byte b:
+                            memoryStream.Write(BitConverter.GetBytes(b));
+                            break;
+                        case short s:
+                            memoryStream.Write(BitConverter.GetBytes(s));
+                            break;
                         case int i:
                             memoryStream.Write(BitConverter.GetBytes(i));
                             break;
+                        case long l:
+                            memoryStream.Write(BitConverter.GetBytes(l));
+                            break;
+                        case float f:
+                            memoryStream.Write(BitConverter.GetBytes(f));
+                            break;
+                        case double d:
+                            memoryStream.Write(BitConverter.GetBytes(d));
+                            break;
+
+                        // Objects
+                        case string str:
+                            {
+                                // (1 byte) - (2 bytes) - (str data)
+                                byte engaged = (byte)(str == null ? 0 : 1);
+                                memoryStream.WriteByte(engaged);
+                                if (str != null)
+                                {
+                                    ushort strSize = (ushort)str.Length;
+                                    memoryStream.Write(BitConverter.GetBytes(strSize));
+                                    var strData = Encoding.UTF8.GetBytes(str);
+                                    memoryStream.Write(strData);
+                                }
+                            }
+                            break;
+                        case Player p:
+                            {
+                                byte engaged = (byte)(p == null ? 0 : 1);
+                                memoryStream.WriteByte(engaged);
+                                if( p != null )
+                                {
+                                    byte[] guidData = p.GetUUID().ToByteArray();
+                                    memoryStream.Write(guidData);
+                                }
+                            }
+                            break;
+
+                        case Location l:
+                            {
+                                byte engaged = (byte)(l == null ? 0 : 1);
+                                memoryStream.WriteByte(engaged);
+                                if (l != null)
+                                {
+                                    memoryStream.Write(l.Serialize());
+                                }
+                            }
+                            break;
+
                         default:
                             // Error: type not supported
                             return null;
@@ -72,7 +145,35 @@ namespace CubivoxCore.Networking.DataFormat
                 {
                     byte[] primitiveBuffer = new byte[8];
 
-                    if (type == typeof(int))
+                    // Primitives
+                    if (type == typeof(bool))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 1) != 1)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(BitConverter.ToBoolean(primitiveBuffer));
+                    }
+                    else if (type == typeof(byte))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 1) != 1)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(primitiveBuffer[0]);
+                    }
+                    else if (type == typeof(short))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 2) != 2)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(BitConverter.ToInt16(primitiveBuffer));
+                    }
+                    else if (type == typeof(int))
                     {
                         if (memoryStream.Read(primitiveBuffer, 0, 4) != 4)
                         {
@@ -80,6 +181,96 @@ namespace CubivoxCore.Networking.DataFormat
                             return null;
                         }
                         output.Add(BitConverter.ToInt32(primitiveBuffer));
+                    }
+                    else if (type == typeof(long))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 8) != 8)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(BitConverter.ToInt64(primitiveBuffer));
+                    }
+                    else if (type == typeof(float))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 4) != 4)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(BitConverter.ToSingle(primitiveBuffer));
+                    }
+                    else if (type == typeof(double))
+                    {
+                        if (memoryStream.Read(primitiveBuffer, 0, 8) != 8)
+                        {
+                            // End of stream
+                            return null;
+                        }
+                        output.Add(BitConverter.ToDouble(primitiveBuffer));
+                    }
+
+                    // Objects
+                    else if (type == typeof(string))
+                    {
+                        bool engaged = memoryStream.ReadByte() == 0 ? false : true;
+                        if( !engaged )
+                        {
+                            output.Add(null);
+                        }
+                        else
+                        {
+                            ushort strLength = 0;
+                            if( memoryStream.Read(primitiveBuffer, 0, 2) != 2 )
+                            {
+                                return null;
+                            }
+
+                            strLength = BitConverter.ToUInt16(primitiveBuffer);
+                            byte[] strData = new byte[strLength];
+                            if( memoryStream.Read(strData, 0, strLength) != strLength )
+                            {
+                                return null;
+                            }
+
+                            string str = Encoding.UTF8.GetString(strData);
+                            output.Add(str);
+                        }
+                    }
+                    else if (type == typeof(Player))
+                    {
+                        bool engaged = memoryStream.ReadByte() == 0 ? false : true;
+                        if (!engaged)
+                        {
+                            output.Add(null);
+                        }
+                        else
+                        {
+                            byte[] uuid = new byte[16];
+                            if( memoryStream.Read(uuid, 0, 16) != 16 )
+                            {
+                                return null;
+                            }
+                            Guid guid = new Guid(uuid);
+                            output.Add(Cubivox.GetPlayerByUuid(guid));
+                        }
+                    }
+                    else if (type == typeof(Location))
+                    {
+                        bool engaged = memoryStream.ReadByte() == 0 ? false : true;
+                        if (!engaged)
+                        {
+                            output.Add(null);
+                        }
+                        else
+                        {
+                            byte[] locData = new byte[32];
+                            if (memoryStream.Read(locData, 0, 32) != 32 )
+                            {
+                                return null;
+                            }
+                            output.Add(new Location(locData));
+                        }
                     }
                     else
                     {
@@ -90,6 +281,57 @@ namespace CubivoxCore.Networking.DataFormat
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Assert that the objects provided in an assert match the types that are expected.
+        /// </summary>
+        /// <param name="types">The expected types (including Player for ServerTransports)</param>
+        /// <param name="data">The provided data.</param>
+        /// <param name="isServerTransport">If checking a server transport delegate.</param>
+        /// <exception cref="ArgumentException">If an issue is found with the provided parameters.</exception>
+        public static void AssertTypeMatch(Type[] types, object[] data, bool isServerTransport)
+        {
+            int typeOffset = 0;
+            if( isServerTransport )
+            {
+                if( types.Length - 1 != data.Length )
+                {
+                    throw new ArgumentException("Invalid number of parameters.");
+                }
+                typeOffset = 1;
+            }
+            else
+            {
+                if( types.Length != data.Length )
+                {
+                    throw new ArgumentException("Invalid number of parameters.");
+                }
+            }
+
+            for( int i = 0; i < data.Length; ++i )
+            {
+                if( data[i].GetType() != types[i + typeOffset].GetType() )
+                {
+                    throw new ArgumentException($"Provided object at index {i} does not match the expected type.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Assert that a delegate only has supported types.
+        /// </summary>
+        /// <param name="types">The parameter types for a delegate.</param>
+        /// <exception cref="InvalidTransportTypeException">If there is an invalid type.</exception>
+        public static void AssertSupportedTypes(Type[] types)
+        {
+            foreach( Type type in types )
+            {
+                if( !SupportedTypes.Contains(type) )
+                {
+                    throw new InvalidTransportTypeException($"Type {type.Name} is not supported for transports!");
+                }
+            }
         }
     }
 }

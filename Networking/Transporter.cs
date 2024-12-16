@@ -43,7 +43,7 @@ namespace CubivoxCore.Networking
         /// <param name="transportDelegate">The transport delegate to register.</param>
         /// <exception cref="InvalidTransportTypeException">If the delegate type T contains invalid types, or if the first parameter type is not <see cref="Player"/>.</exception>
         /// <exception cref="TransportTypeException">If the delegate type T does not match what is already registered for the specified ControllerKey.</exception>
-        public void RegisterServerTransport<T>(ControllerKey key, T? transportDelegate = null) where T : Delegate
+        public static void RegisterServerTransport<T>(ControllerKey key, T? transportDelegate = null) where T : Delegate
         {
             Cubivox.GetTransportRegistry().RegisterServerTransport(key, transportDelegate);
         }

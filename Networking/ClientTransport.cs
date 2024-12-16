@@ -1,4 +1,5 @@
 ﻿using CubivoxCore.Attributes;
+using CubivoxCore.Networking.DataFormat;
 using CubivoxCore.Players;
 
 namespace CubivoxCore.Networking
@@ -13,7 +14,9 @@ namespace CubivoxCore.Networking
 
         public ClientTransport(ControllerKey key)
         {
-            mKey = key;    
+            mKey = key;
+
+            TransportFormat.AssertSupportedTypes(GetParameterTypes());
         }
 
         /// <inheritdoc/>
