@@ -9,13 +9,8 @@ namespace CubivoxCore.BaseGame.VoxelDefs
     /// <summary>
     /// This voxel is used to represent "Air", "Void", or "Empty Space" within Cubivox.
     /// </summary>
-    public class AirVoxel : VoxelDef
+    public sealed class AirVoxel : VoxelDef
     {
-        /// <summary>
-        /// The key of the Air voxel.
-        /// </summary>
-        public static readonly string KEY = "AIR";
-
         /// <returns>Will always return null.</returns>
         public AtlasTexture GetAtlasTexture()
         {
@@ -24,7 +19,7 @@ namespace CubivoxCore.BaseGame.VoxelDefs
 
         public ControllerKey GetControllerKey()
         {
-            return ControllerKeyUtils.CubivoxControllerKey(KEY);
+            return Voxels.AIR;
         }
 
         public Mod GetMod()

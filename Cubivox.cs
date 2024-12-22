@@ -1,4 +1,5 @@
 ﻿using CubivoxCore.Attributes;
+using CubivoxCore.BaseGame.VoxelDefs;
 using CubivoxCore.Console;
 using CubivoxCore.Events;
 using CubivoxCore.Exceptions;
@@ -201,6 +202,20 @@ namespace CubivoxCore
         public static TransportRegistry GetTransportRegistry()
         {
             return GetInstance().transportRegistry;
+        }
+
+        /// <summary>
+        /// Register base game voxels.
+        /// 
+        /// <para>Internal use only.</para>
+        /// </summary>
+        protected void RegisterBaseGameVoxels()
+        {
+            itemRegistry.RegisterItem(new AirVoxel());
+            itemRegistry.RegisterItem(new TestVoxel(this));
+            itemRegistry.RegisterItem(new GrassVoxel(this));
+            itemRegistry.RegisterItem(new DirtVoxel(this));
+            itemRegistry.RegisterItem(new CandyCaneVoxel(this));
         }
     }
 }
