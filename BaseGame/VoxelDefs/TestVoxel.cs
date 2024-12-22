@@ -7,7 +7,7 @@ namespace CubivoxCore.BaseGame.VoxelDefs
 {
     [Name("Test Voxel")]
     [Key("TEST")]
-    [Texture(TextureRoot.CUBIVOX, "test_voxel.png")]
+    [Texture(TextureRoot.CUBIVOX, "Textures/test_voxel")]
     public sealed class TestVoxel : ModVoxel
     {
         public TestVoxel(Mod mod) : base(mod)

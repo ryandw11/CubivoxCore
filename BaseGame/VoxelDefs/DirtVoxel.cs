@@ -7,7 +7,7 @@ namespace CubivoxCore.BaseGame.VoxelDefs
 {
     [Name("Dirt")]
     [Key("DIRT")]
-    [Texture(TextureRoot.CUBIVOX, "dirt_voxel.png")]
+    [Texture(TextureRoot.CUBIVOX, "Textures/dirt_voxel")]
     public sealed class DirtVoxel : ModVoxel
     {
         public DirtVoxel(Mod mod) : base(mod)
