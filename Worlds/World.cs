@@ -19,7 +19,7 @@ namespace CubivoxCore.Worlds
         /// </summary>
         /// <param name="location">The location of a chunk.</param>
         /// <returns>If the chunk is loaded.</returns>
-        bool IsChunkLoaded(Location location);
+        bool IsChunkLoaded(ChunkLocation location);
 
         /// <summary>
         /// Check if a chunk is loaded.
@@ -42,7 +42,7 @@ namespace CubivoxCore.Worlds
         /// <para>Server Side Only</para>
         /// </summary>
         /// <param name="location">The location of the chunk.</param>
-        void LoadChunk(Location location);
+        void LoadChunk(ChunkLocation location);
 
         /// <summary>
         /// Request that a chunk is loaded.
@@ -65,7 +65,7 @@ namespace CubivoxCore.Worlds
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        Chunk GetChunk(Location location);
+        Chunk GetChunk(ChunkLocation location);
         Chunk GetChunk(int x, int y, int z);
         void Save();
         void UnloadChunk(int x, int y, int z);

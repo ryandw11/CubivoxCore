@@ -149,6 +149,16 @@ namespace CubivoxCore
             return new Location(world, x, y, z, pitch, yaw);
         }
 
+        /// <summary>
+        /// Convert to the chunk coordinate system.
+        /// <para>Note: This is a lossy conversion. Some precision will be lost.</para>
+        /// </summary>
+        /// <returns>The chunk coordinates for this location.</returns>
+        public ChunkLocation ToChunkLocation()
+        {
+            return new ChunkLocation(this);
+        }
+
         private static bool ApproxEqual(double x1, double x2)
         {
             return Math.Abs(x1 - x2) < 0.03;

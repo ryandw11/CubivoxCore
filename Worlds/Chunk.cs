@@ -44,7 +44,7 @@ namespace CubivoxCore.Worlds
         /// Get the local of the chunk.
         /// </summary>
         /// <returns>The location of the chunk.</returns>
-        Location GetLocation();
+        ChunkLocation GetLocation();
 
         /// <summary>
         /// Completely regenerates a chunk based upon the world's generator.
