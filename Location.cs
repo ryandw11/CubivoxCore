@@ -16,6 +16,21 @@ namespace CubivoxCore
         public float pitch { private set; get; }
         public float yaw { private set; get; }
 
+        /// <summary>
+        /// X in integer form
+        /// </summary>
+        public int X { get { return GetVoxelX(); } }
+
+        /// <summary>
+        /// Y in integer form
+        /// </summary>
+        public int Y { get { return GetVoxelY(); } }
+
+        /// <summary>
+        /// Z in integer form
+        /// </summary>
+        public int Z { get { return GetVoxelZ(); } }
+
         public Location(World world, double x, double y, double z, float pitch, float yaw)
         {
             this.world = world;

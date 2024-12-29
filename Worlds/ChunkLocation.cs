@@ -27,9 +27,9 @@ namespace CubivoxCore.Worlds
         public ChunkLocation(Location location)
         {
             World = location.world;
-            X = location.GetVoxelX() / CHUNK_SIZE;
-            Y = location.GetVoxelY() / CHUNK_SIZE;
-            Z = location.GetVoxelZ() / CHUNK_SIZE;
+            X = (int)Math.Floor(location.x / CHUNK_SIZE);
+            Y = (int)Math.Floor(location.y / CHUNK_SIZE);
+            Z = (int) Math.Floor( location.z / CHUNK_SIZE );
         }
 
         /// <summary>
@@ -39,6 +39,18 @@ namespace CubivoxCore.Worlds
         public Location ToLocation()
         {
             return new Location(X * CHUNK_SIZE, Y * CHUNK_SIZE, Z * CHUNK_SIZE);
+        }
+
+        /// <summary>
+        /// A Cuboid to represent section of the world in voxel space a chunk location takes up.
+        /// </summary>
+        /// <returns>The cuboid to represent the chunk.</returns>
+        public Cuboid AsCuboid()
+        {
+            var location1 = ToLocation();
+            var location2 = new Location(World, location1.x + CHUNK_SIZE - 1, location1.y + CHUNK_SIZE - 1, location1.z + CHUNK_SIZE - 1);
+
+            return new Cuboid(location1, location2);
         }
 
         public static ChunkLocation operator +(ChunkLocation loc1, ChunkLocation loc2)

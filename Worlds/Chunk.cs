@@ -53,5 +53,24 @@ namespace CubivoxCore.Worlds
         /// </summary>
         [ServerOnly]
         void Regenerate();
+
+        /// <summary>
+        /// Start a bulk edit.
+        /// 
+        /// <para>Note: Other mods can still perform bulk edits in the same area at the same time.</para>
+        /// <para>Bulk editing is only available on the server.</para>
+        /// </summary>
+        /// <returns>The bulk editor.</returns>
+        [ServerOnly]
+        ChunkBulkEditor StartBulkEdit();
+
+        /// <summary>
+        /// Submit a bulk editor.
+        /// <para>This will send out packets for clients to update their chunks.</para>
+        /// <para>Bulk editing is only available on the server.</para>
+        /// </summary>
+        /// <param name="chunkBulkEditor">The bulk edit to submit.</param>
+        [ServerOnly]
+        void SubmitBulkEdit(ChunkBulkEditor chunkBulkEditor);
     }
 }
