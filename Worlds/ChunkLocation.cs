@@ -1,5 +1,3 @@
-using CubivoxCore.Utils;
-
 namespace CubivoxCore.Worlds
 {
     /// <summary>
@@ -11,11 +9,33 @@ namespace CubivoxCore.Worlds
     {
         public static readonly int CHUNK_SIZE = 16;
 
+        /// <summary>
+        /// The world the chunk is in. (May be null).
+        /// </summary>
         public World? World { get; private set; }
+
+        /// <summary>
+        /// The X coordinate in chunk space.
+        /// </summary>
         public int X { get; private set; }
+
+        /// <summary>
+        /// The Y coordinate in chunk space.
+        /// </summary>
         public int Y { get; private set; }
+
+        /// <summary>
+        /// The Z coordinate in chunk space.
+        /// </summary>
         public int Z { get; private set; }
 
+        /// <summary>
+        /// Create a new chunk location using chunk coordinate space.
+        /// </summary>
+        /// <param name="world">The world the chunk is in.</param>
+        /// <param name="x">The x coordinate in chunk space.</param>
+        /// <param name="y">The y coordiante in chunk space.</param>
+        /// <param name="z">The z coordinate in chunk space.</param>
         public ChunkLocation(World? world, int x, int y, int z)
         {
             World = world;
@@ -24,6 +44,10 @@ namespace CubivoxCore.Worlds
             Z = z;
         }
 
+        /// <summary>
+        /// Create a chunk location from a voxel space location.
+        /// </summary>
+        /// <param name="location">The voxel space location to convert.</param>
         public ChunkLocation(Location location)
         {
             World = location.world;

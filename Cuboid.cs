@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CubivoxCore
+﻿namespace CubivoxCore
 {
     /// <summary>
-    /// Represents a cube area within voxel space.
+    /// Represents a cube region within voxel space.
     /// </summary>
     public sealed class Cuboid
     {
+        /// <summary>
+        /// The minimum corner of the cuboid region.
+        /// </summary>
         public Location MinCorner { get; private set; }
+
+        /// <summary>
+        /// The maximum corner of the cuboid region.
+        /// 
+        /// <para>This corner is inclusive.</para>
+        /// </summary>
         public Location MaxCorner { get; private set; }
 
         /// <summary>
@@ -45,10 +50,10 @@ namespace CubivoxCore
         }
 
         /// <summary>
-        /// Check if this Cuboid overlaps another cubvoid.
+        /// Check if this Cuboid region overlaps another cubvoid.
         /// </summary>
         /// <param name="other">The other cuboid.</param>
-        /// <returns>If the Cuboids overlap.</returns>
+        /// <returns>If the Cuboid regions overlap.</returns>
         public bool Overlaps(Cuboid other)
         {
             // If one cuboid is completely to the left, right, below, or above the other, they don't overlap.
@@ -74,6 +79,8 @@ namespace CubivoxCore
         /// 
         /// <para>For example, if this cuboid is ((0, 0, 0), (17, 17, 17)), and a cuboid of ((3, 3, 3), (20, 20, 20)) is inputed,
         /// the resulting Cuboid would be ((3, 3, 3), (17, 17, 17)). </para>
+        /// 
+        /// <para>Note: The behavior is undefined if the two cuboids do not overlap. Check <see cref="Overlaps(Cuboid)"/> first.</para>
         /// </summary>
         /// <param name="other">The other cuboid to clamp within the bounds of this cuboid.</param>
         /// <returns>The clamped cuboid.</returns>
@@ -96,6 +103,12 @@ namespace CubivoxCore
             return new Cuboid(clampedMin, clampedMax);
         }
 
+        /// <summary>
+        /// Create a new, minimum volume, expanded cuboid which both Cuboids fit in.
+        /// </summary>
+        /// <param name="current">The current cuboid.</param>
+        /// <param name="other">The cuboid which should fit in the new cuboid.</param>
+        /// <returns>The new cuboid which fits both cuboid regions.</returns>
         public static Cuboid operator +(Cuboid current, Cuboid other)
         {
             var minCorner = new Location(
