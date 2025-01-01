@@ -8,6 +8,7 @@ using CubivoxCore.Mods;
 using CubivoxCore.Networking;
 using CubivoxCore.Players;
 using CubivoxCore.Texturing;
+using CubivoxCore.UI;
 using CubivoxCore.Voxels;
 using CubivoxCore.Worlds;
 using CubivoxCore.Worlds.Generation;
@@ -32,6 +33,7 @@ namespace CubivoxCore
         protected TextureAtlas textureAtlas;
         protected EventManager eventManager;
         protected TransportRegistry transportRegistry;
+        protected Hud hud;
 
         public string[] GetAuthors()
         {
@@ -202,6 +204,18 @@ namespace CubivoxCore
         public static TransportRegistry GetTransportRegistry()
         {
             return GetInstance().transportRegistry;
+        }
+
+        /// <summary>
+        /// The HUD display for the client.
+        /// 
+        /// <para>This is only available on client.s</para>
+        /// </summary>
+        /// <returns>The HUD display for the client.</returns>
+        [ClientOnly]
+        public static Hud GetHud()
+        {
+            return GetInstance().hud;
         }
 
         /// <summary>
