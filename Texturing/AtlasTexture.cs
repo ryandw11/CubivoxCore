@@ -58,7 +58,7 @@ namespace CubivoxCore.Texturing
             }
 
             var modAssembly = mod.GetType().Assembly;
-            return modAssembly.GetManifestResourceStream($"{modAssembly.GetName().Name}.resources.{Location}");
+            return modAssembly.GetManifestResourceStream($"{modAssembly.GetName().Name}.{Location.Replace("/", ".")}");
         }
     }
 }
